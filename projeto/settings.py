@@ -89,7 +89,7 @@ elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
     DATABASES = {
         "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
     }
-#cadsistemadmin:cadsistemadminpass1@postgresql-87987-0.cloudclusters.net:10008/CadSistem
+#postgres://cadsistemadmin:cadsistemadminpass1@postgresql-87987-0.cloudclusters.net:10008/CadSistem
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 # DATABASES = {
 #     'default': {
