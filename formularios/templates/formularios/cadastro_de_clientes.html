@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cadastro de Cliente{% endblock %}
+
+{% block conteudo %}
+<!-- Main Content -->
+<div class="hk-pg-wrapper pb-0">
+    <div class="hk-pg-body py-0">
+        <div class="blogapp-wrap blogapp-sidebar-toggle">
+            <div class="blogapp-content">
+                <div class="blogapp-detail-wrap">
+                    <header class="blog-header">
+                        <div class="d-flex align-items-center">
+                            <a class="blogapp-title link-dark" href="#">
+                                <h1>Cadastrar Cliente</h1>
+                            </a>
+                        </div>
+                        
+                    </header>
+                    <div class="blog-body">
+                        <div data-simplebar class="nicescroll-bar">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-xxl-9 col-lg-8">
+                                        <form class="edit-post-form" method="post" action="">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Nome</label>
+                                                        <input class="form-control"  placeholder="Nome do Cliente">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Contato 1</label>
+                                                        <input class="form-control"  placeholder="(00) 000-000-000">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Tag</label>
+                                                        <select class="form-select">
+                                                            <option>1</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Documento</label>
+                                                        <input class="form-control"  placeholder="Documento">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Nome do Representante</label>
+                                                        <input class="form-control"  placeholder="Nome do Representante">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">CPF do Representante</label>
+                                                        <input class="form-control"  placeholder="000.000.000-00">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Contato 2</label>
+                                                        <input class="form-control"  placeholder="(00) 000-000-000">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Contato 3</label>
+                                                        <input class="form-control"  placeholder="(00) 000-000-000">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Email</label>
+                                                        <input class="form-control"  placeholder="exemplo@exemplo.com">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Logradouro</label>
+                                                        <input class="form-control"  placeholder="Rua Exemplo">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Número</label>
+                                                        <input class="form-control"  placeholder="000">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">cep</label>
+                                                        <input class="form-control"  placeholder="00-000-000">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Complemento</label>
+                                                        <input class="form-control"  placeholder="Apto 0">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Ponto de Referência</label>
+                                                        <input class="form-control"  placeholder="Próximo à empresa X no KM 42">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Bairro</label>
+                                                        <input class="form-control"  placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Município</label>
+                                                        <input class="form-control"  placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label">UF</label>
+                                                        <input class="form-control"  placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-light">Cadastrar</button>
+                                           
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Category -->
+                <div id="add_new_cat" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h6 class="text-uppercase fw-bold mb-3">Add Category</h6>
+                                <form>
+                                    <div class="row gx-3">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="Category Name"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary float-end" data-bs-dismiss="modal">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Add Category -->
+                
+                <!-- Add Tag -->
+                <div id="add_new_tag" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h6 class="text-uppercase fw-bold mb-3">Add Tag</h6>
+                                <form>
+                                    <div class="row gx-3">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <select id="input_tags_1" class="form-control" multiple="multiple">
+                                                    <option selected="selected">Collaborator</option>
+                                                    <option selected="selected">Designer</option>
+                                                    <option selected="selected">React Developer</option>
+                                                    <option selected="selected">Promotion</option>
+                                                    <option selected="selected">Advertisement</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary float-end" data-bs-dismiss="modal">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Tag -->
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>
+<!-- /Main Content -->
+{% endblock %}
