@@ -29,23 +29,24 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="form-label">Nome</label>
-                                                        <input class="form-control"  placeholder="Nome do Cliente" required >
+                                                        <input class="form-control" name="nome"  placeholder="Nome do Cliente" required >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Contato 1</label>
-                                                        <input class="form-control"  placeholder="(00) 000-000-000" required>
+                                                        <input name="contato_1" data-mask="(00) 000-000-000" class="form-control"  placeholder="(00) 000-000-000" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Tag</label>
-                                                        <select class="form-select" required>
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
+                                                        <select class="form-select" name="tags" required>
+                                                            {% if tags %}
+                                                                {% for tag in tags %}
+                                                                <option value="{{tag.id}}">{{tag.nome}}</option>
+                                                                {% endfor %}
+                                                            {% endif %}
                                                         </select>
                                                     </div>
                                                 </div>
@@ -54,19 +55,19 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="form-label">Documento</label>
-                                                        <input class="form-control"  placeholder="Documento">
+                                                        <input data-mask="00000000000000" name="documento" class="form-control"  placeholder="Documento">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="form-label">Nome do Representante</label>
-                                                        <input class="form-control"  placeholder="Nome do Representante">
+                                                        <input class="form-control" name="nome_rep" placeholder="Nome do Representante">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="form-label">CPF do Representante</label>
-                                                        <input class="form-control"  placeholder="000.000.000-00">
+                                                        <input class="form-control" data-mask="000.000.000-00" name="cpf_rep" placeholder="000.000.000-00">
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,19 +75,19 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Contato 2</label>
-                                                        <input class="form-control"  placeholder="(00) 000-000-000">
+                                                        <input class="form-control" data-mask="(00) 000-000-000" name="contato_2"  placeholder="(00) 000-000-000">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Contato 3</label>
-                                                        <input class="form-control"  placeholder="(00) 000-000-000">
+                                                        <input class="form-control" data-mask="(00) 000-000-000" name="contato_3"  placeholder="(00) 000-000-000">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="form-label">Email</label>
-                                                        <input class="form-control"  placeholder="exemplo@exemplo.com">
+                                                        <input class="form-control" name="email"  placeholder="exemplo@exemplo.com">
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,20 +95,20 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="form-label">Logradouro</label>
-                                                        <input class="form-control"  placeholder="Rua Exemplo">
+                                                        <input class="form-control" name="logradouro"  placeholder="Rua Exemplo">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label class="form-label">Número</label>
-                                                        <input class="form-control"  placeholder="000">
+                                                        <input class="form-control" name="numero" data-mask="00000" placeholder="000">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="form-label">cep</label>
-                                                        <input class="form-control"  placeholder="00-000-000">
+                                                        <input class="form-control" name="cep" data-mask="00000-000"  placeholder="00000-000">
                                                     </div>
                                                 </div>
                                             </div>
@@ -115,13 +116,13 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Complemento</label>
-                                                        <input class="form-control"  placeholder="Apto 0">
+                                                        <input class="form-control" name="complemento"  placeholder="Apto 0">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-9">
                                                     <div class="form-group">
                                                         <label class="form-label">Ponto de Referência</label>
-                                                        <input class="form-control"  placeholder="Próximo à empresa X no KM 42">
+                                                        <input class="form-control" name="ponto_referencia"  placeholder="Próximo à empresa X no KM 42">
                                                     </div>
                                                 </div>
                                             </div>
@@ -129,7 +130,7 @@
                                                 <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label class="form-label">Bairro</label>
-                                                        <input class="form-control"  placeholder="">
+                                                        <input class="form-control" name="bairro"  placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-5">
@@ -141,13 +142,13 @@
                                                 <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label class="form-label">UF</label>
-                                                        <input class="form-control"  placeholder="">
+                                                        <input class="form-control" name="municipio" data-mask="AA" placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
                                             
                                             <button type="submit" class="btn btn-light">Cadastrar</button>
-                                           
+                                            
                                         </form>
                                     </div>
                                     
@@ -217,4 +218,10 @@
     <!-- /Page Body -->
 </div>
 <!-- /Main Content -->
+<script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"></script>
+<script src="{% static 'js/jquery.mask.js' %}"></script>
+
 {% endblock %}
