@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block title %}Cadastro de Cliente{% endblock %}
-
+{% block header %}
+<link href="{% static 'formularios/css/cadastro_cliente.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block conteudo %}
 <!-- Main Content -->
 <div class="hk-pg-wrapper pb-0">
@@ -17,31 +19,48 @@
                             </a>
                         </div>
                         
+                        
                     </header>
                     <div class="blog-body">
                         <div data-simplebar class="nicescroll-bar">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-xxl-9 col-lg-8">
-                                        <form class="edit-post-form" method="post" action="">
+                                        {% include 'parcials/_messages.html' %}
+                                        <div class="btn-group btn-group-lg my-3">
+                                            <button id="btnpf" type="button" class="btn btn-secondary">PESSOA FÍSICA</button>
+                                            <button id="btnpj" type="button" class="btn btn-light">PESSOA JURÍDICA</button>
+                                          </div>
+                                          
+                                        <!-- Form da Pessoa Física-->
+                                        <form class="edit-post-form" method="post" action="" id="pfForm">
                                             {% csrf_token %}
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.nome.errors }}
+                                                        </div>
                                                         <label class="form-label">Nome</label>
-                                                        <input class="form-control" name="nome"  placeholder="Nome do Cliente" required >
+                                                        <input class="form-control" name="nome" value="{{ dict.nome }}"  placeholder="Nome do Cliente" required >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.contato_1.errors }}
+                                                        </div>
                                                         <label class="form-label">Contato 1</label>
-                                                        <input name="contato_1" data-mask="(00) 000-000-000" class="form-control"  placeholder="(00) 000-000-000" required>
+                                                        <input name="contato_1" value="{{ dict.contato_1 }}" data-mask="(00) 000-000-000" class="form-control"  placeholder="(00) 000-000-000" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.tags.errors }}
+                                                        </div>
                                                         <label class="form-label">Tag</label>
-                                                        <select class="form-select" name="tags" required>
+                                                        <select class="form-select" value="{{ dict.tags }}" name="tags" required>
                                                             {% if tags %}
                                                                 {% for tag in tags %}
                                                                 <option value="{{tag.id}}">{{tag.nome}}</option>
@@ -54,104 +73,307 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="form-label">Documento</label>
-                                                        <input data-mask="00000000000000" name="documento" class="form-control"  placeholder="Documento">
+                                                        <div class="erros">
+                                                            {{ form.documento.errors }}
+                                                        </div>
+                                                        <label class="form-label">CPF</label>
+                                                        <input value="{{ dict.documento }}" data-mask="000.000.000-00" name="documento" class="form-control"  placeholder="000.000.000-00">
                                                     </div>
                                                 </div>
+                                                <input type="hidden" class="form-control" name="nome_rep" value="" placeholder="Nome do Representante">
+                                                <input type="hidden" class="form-control" value="{{ dict.cpf_rep }}" data-mask="000.000.000-00" name="cpf_rep" placeholder="000.000.000-00">
+                                                
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="form-label">Nome do Representante</label>
-                                                        <input class="form-control" name="nome_rep" placeholder="Nome do Representante">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="form-label">CPF do Representante</label>
-                                                        <input class="form-control" data-mask="000.000.000-00" name="cpf_rep" placeholder="000.000.000-00">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.contato_2.errors }}
+                                                        </div>
                                                         <label class="form-label">Contato 2</label>
-                                                        <input class="form-control" data-mask="(00) 000-000-000" name="contato_2"  placeholder="(00) 000-000-000">
+                                                        <input class="form-control" value="{{ dict.contato_2 }}" data-mask="(00) 000-000-000" name="contato_2"  placeholder="(00) 000-000-000">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.contato_3.errors }}
+                                                        </div>
                                                         <label class="form-label">Contato 3</label>
-                                                        <input class="form-control" data-mask="(00) 000-000-000" name="contato_3"  placeholder="(00) 000-000-000">
+                                                        <input class="form-control" data-mask="(00) 000-000-000" value="{{ dict.contato_3 }}" name="contato_3"  placeholder="(00) 000-000-000">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.email.errors }}
+                                                        </div>
                                                         <label class="form-label">Email</label>
-                                                        <input class="form-control" name="email"  placeholder="exemplo@exemplo.com">
+                                                        <input class="form-control" name="email" value="{{ dict.email }}"  placeholder="exemplo@exemplo.com">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.cep.errors }}
+                                                        </div>
+                                                        <label class="form-label">cep</label>
+                                                        <input id="cep" class="form-control" value="{{ dict.cep }}" name="cep" data-mask="00000000"  placeholder="00000000">
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.logradouro.errors }}
+                                                        </div>
                                                         <label class="form-label">Logradouro</label>
-                                                        <input class="form-control" name="logradouro"  placeholder="Rua Exemplo">
+                                                        <input id="logradouro" class="form-control" value="{{ dict.logradouro }}" name="logradouro"  placeholder="Rua Exemplo">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.numero.errors }}
+                                                        </div>
                                                         <label class="form-label">Número</label>
-                                                        <input class="form-control" name="numero" data-mask="00000" placeholder="000">
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="form-label">cep</label>
-                                                        <input class="form-control" name="cep" data-mask="00000-000"  placeholder="00000-000">
+                                                        <input id="numero" class="form-control" value="{{ dict.numero }}" name="numero" data-mask="00000" placeholder="000">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.complemento.errors }}
+                                                        </div>
                                                         <label class="form-label">Complemento</label>
-                                                        <input class="form-control" name="complemento"  placeholder="Apto 0">
+                                                        <input class="form-control" value="{{ dict.complemento }}" name="complemento"  placeholder="Apto 0">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-9">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.ponto_referencia.errors }}
+                                                        </div>
                                                         <label class="form-label">Ponto de Referência</label>
-                                                        <input class="form-control" name="ponto_referencia"  placeholder="Próximo à empresa X no KM 42">
+                                                        <input class="form-control" value="{{ dict.ponto_referencia }}" name="ponto_referencia"  placeholder="Próximo à empresa X no KM 42">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.bairro.errors }}
+                                                        </div>
                                                         <label class="form-label">Bairro</label>
-                                                        <input class="form-control" name="bairro"  placeholder="">
+                                                        <input id="bairro" class="form-control" value="{{ dict.bairro }}" name="bairro"  placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.municipio.errors }}
+                                                        </div>
                                                         <label class="form-label">Município</label>
-                                                        <input class="form-control"  placeholder="">
+                                                        <input id="municipio" class="form-control" value="{{ dict.municipio }}" name="municipio"  placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.uf.errors }}
+                                                        </div>
                                                         <label class="form-label">UF</label>
-                                                        <input class="form-control" name="municipio" data-mask="AA" placeholder="">
+                                                        <input id="uf" class="form-control" value="{{ dict.uf }}" name="uf" data-mask="AA" placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
                                             
                                             <button type="submit" class="btn btn-light">Cadastrar</button>
                                             
-                                        </form>
-                                    </div>
+                                        </form> <!-- /Form da Pessoa Física-->
+
+                                        <!-- Form da Pessoa Jurídica -->
+                                        <form class="edit-post-form hidden" method="post" action="" id="pjForm">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.nome.errors }}
+                                                        </div>
+                                                        <label class="form-label">Razão Social</label>
+                                                        <input class="form-control" name="nome" value="{{ dict.nome }}"  placeholder="Razão Social" required >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.contato_1.errors }}
+                                                        </div>
+                                                        <label class="form-label">Contato 1</label>
+                                                        <input name="contato_1" value="{{ dict.contato_1 }}" data-mask="(00) 000-000-000" class="form-control"  placeholder="(00) 000-000-000" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.tags.errors }}
+                                                        </div>
+                                                        <label class="form-label">Tag</label>
+                                                        <select class="form-select" value="{{ dict.tags }}" name="tags" required>
+                                                            {% if tags %}
+                                                                {% for tag in tags %}
+                                                                <option value="{{tag.id}}">{{tag.nome}}</option>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.documento.errors }}
+                                                        </div>
+                                                        <label class="form-label">CNPJ</label>
+                                                        <input data-mask="00.000.000/0000-00" value="{{ dict.documento }}" name="documento" class="form-control"  placeholder="00.000.000/0000-00">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.nome_rep.errors }}
+                                                        </div>
+                                                        <label class="form-label">Nome do Representante</label>
+                                                        <input class="form-control" value="{{ dict.nome_rep }}" name="nome_rep" placeholder="Nome do Representante">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.cpf_rep.errors }}
+                                                        </div>
+                                                        <label class="form-label">CPF do Representante</label>
+                                                        <input class="form-control" value="{{ dict.cpf_rep }}" data-mask="000.000.000-00" name="cpf_rep" placeholder="000.000.000-00">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.contato_2.errors }}
+                                                        </div>
+                                                        <label class="form-label">Contato 2</label>
+                                                        <input class="form-control" value="{{ dict.contato_2 }}" data-mask="(00) 000-000-000" name="contato_2"  placeholder="(00) 000-000-000">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.contato_3.errors }}
+                                                        </div>
+                                                        <label class="form-label">Contato 3</label>
+                                                        <input class="form-control" value="{{ dict.contato_3 }}" data-mask="(00) 000-000-000" name="contato_3"  placeholder="(00) 000-000-000">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.email.errors }}
+                                                        </div>
+                                                        <label class="form-label">Email</label>
+                                                        <input class="form-control" value="{{ dict.email }}" name="email"  placeholder="exemplo@exemplo.com">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.cep.errors }}
+                                                        </div>
+                                                        <label class="form-label">cep</label>
+                                                        <input id="cep" class="form-control" name="cep" value="{{ dict.cep }}" data-mask="00000-000"  placeholder="00000-000">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.logradouro.errors }}
+                                                        </div>
+                                                        <label class="form-label">Logradouro</label>
+                                                        <input id="logradouro" class="form-control" value="{{ dict.logradouro }}" name="logradouro"  placeholder="Rua Exemplo">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.numero.errors }}
+                                                        </div>
+                                                        <label class="form-label">Número</label>
+                                                        <input id="numero" class="form-control" value="{{ dict.numero }}" name="numero" data-mask="00000" placeholder="000">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.complemento.errors }}
+                                                        </div>
+                                                        <label class="form-label">Complemento</label>
+                                                        <input id="complemento" class="form-control" value="{{ dict.complemento }}" name="complemento"  placeholder="Apto 0">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.ponto_referencia.errors }}
+                                                        </div>
+                                                        <label class="form-label">Ponto de Referência</label>
+                                                        <input class="form-control" value="{{ dict.ponto_referencia }}" name="ponto_referencia"  placeholder="Próximo à empresa X no KM 42">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.bairro.errors }}
+                                                        </div>
+                                                        <label class="form-label">Bairro</label>
+                                                        <input id="bairro" class="form-control" value="{{ dict.bairro }}" name="bairro"  placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.municipio.errors }}
+                                                        </div>
+                                                        <label class="form-label">Município</label>
+                                                        <input id="municipio" class="form-control" value="{{ dict.municipio }}" name="municipio" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <div class="erros">
+                                                            {{ form.uf.errors }}
+                                                        </div>
+                                                        <label class="form-label">UF</label>
+                                                        <input id="uf" class="form-control" value="{{ dict.uf }}" name="uf" data-mask="AA" placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-light">Cadastrar</button>
+                                            
+                                        </form> <!-- /Form da Pessoa Jurídica-->
                                     
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -223,5 +445,58 @@
   integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
   crossorigin="anonymous"></script>
 <script src="{% static 'js/jquery.mask.js' %}"></script>
+<script>
+    $(document).ready(function(){
+    $("#btnpf").click(function(){
+        $("#pfForm").toggleClass("hidden");
+        $("#pjForm").toggleClass("hidden");
+        $("#btnpf").toggleClass('btn-light');
+        $("#btnpf").toggleClass('btn-secondary');
+        $("#btnpj").toggleClass('btn-light');
+        $("#btnpj").toggleClass('btn-secondary');
+    });
+    });
+    $(document).ready(function(){
+    $("#btnpj").click(function(){
+        $("#pfForm").toggleClass("hidden");
+        $("#pjForm").toggleClass("hidden");
+        $("#btnpf").toggleClass('btn-light');
+        $("#btnpf").toggleClass('btn-secondary');
+        $("#btnpj").toggleClass('btn-light');
+        $("#btnpj").toggleClass('btn-secondary');
+    });
+    });
+</script>
 
+<script type="text/javascript">
+	$("#cep").focusout(function(){
+        console.log($(this).val())
+		//Início do Comando AJAX
+		$.ajax({
+            
+			//O campo URL diz o caminho de onde virá os dados
+			//É importante concatenar o valor digitado no CEP
+			url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/unicode/',
+			//Aqui você deve preencher o tipo de dados que será lido,
+			//no caso, estamos lendo JSON.
+			dataType: 'json',
+			//SUCESS é referente a função que será executada caso
+			//ele consiga ler a fonte de dados com sucesso.
+			//O parâmetro dentro da função se refere ao nome da variável
+			//que você vai dar para ler esse objeto.
+			success: function(resposta){
+				//Agora basta definir os valores que você deseja preencher
+				//automaticamente nos campos acima.
+				$("#logradouro").val(resposta.logradouro);
+				$("#complemento").val(resposta.complemento);
+				$("#bairro").val(resposta.bairro);
+				$("#municipio").val(resposta.localidade);
+				$("#uf").val(resposta.uf);
+				//Vamos incluir para que o Número seja focado automaticamente
+				//melhorando a experiência do usuário
+				$("#numero").focus();
+			}
+		});
+	});
+</script>
 {% endblock %}

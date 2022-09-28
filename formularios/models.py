@@ -1,6 +1,8 @@
 from django.db import models
 
 class Cliente(models.Model):
+    #usuario que cadastrou
+    #data
     nome = models.CharField(max_length=255, verbose_name="Nome ou Razão Social")
     documento = models.CharField(max_length=14, verbose_name="CPF ou CNPJ", null=True, blank=True)
     nome_rep = models.CharField(max_length=255, verbose_name="Nome Rep Legal", null=True, blank=True)
