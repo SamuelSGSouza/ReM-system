@@ -1,7 +1,7 @@
 from django import forms
 from . import models 
 from django.core.exceptions import ValidationError
-from validate_docbr import CPF
+from validate_docbr import CPF, CNPJ
 
 import re
 
@@ -43,19 +43,52 @@ class ClienteForm(forms.ModelForm):
         return contato
     
     def clean_documento(self): 
-        documento = self.cleaned_data['documento'] 
-        if len(documento) < 11:
-            raise ValidationError('Este campo precisa ser preenchido corretamente')
-        else:
-            cpf = CPF()
-            documento = str(documento)
-            if cpf.validate(documento):
-                documento = re.sub('[^0-9]', '', documento)
+        documento = str(self.cleaned_data['documento'])
+        if len(documento) != 0:
+            if len(documento) == 18: #CNPJ
+                cnpj = CNPJ()
                 documento = str(documento)
-                return documento
+                if cnpj.validate(documento):
+                    documento = re.sub('[^0-9]', '', documento)
+                    documento = str(documento)
+                    return documento
+                else:
+                    raise ValidationError('Insira um CNPJ válido')
+                
+            elif len(documento) == 14: #CPF
+                cpf = CPF()
+                documento = str(documento)
+                if cpf.validate(documento):
+                    documento = re.sub('[^0-9]', '', documento)
+                    documento = str(documento)
+                    return documento
+                else:
+                    raise ValidationError('Insira um CPF válido')
             else:
-                raise ValidationError('Insira um CPF válido')
-    
+                raise ValidationError('Preencha corretamente o documento')
+
+        else:
+            return documento
+
+    def clean_cpf_rep(self): 
+        documento = self.cleaned_data['cpf_rep'] or ""
+        if len(documento) != 0:
+            if len(documento) < 11:
+                raise ValidationError('Este campo precisa ser preenchido corretamente')
+            else:
+                cpf = CPF()
+                documento = str(documento)
+                if cpf.validate(documento):
+                    documento = re.sub('[^0-9]', '', documento)
+                    documento = str(documento)
+                    return documento
+                else:
+                    raise ValidationError('Insira um CPF válido')
+        else:
+            return documento
+
     def clean_uf(self): 
-        uf = str(self.cleaned_data['uf']).upper()
+        uf = self.cleaned_data['uf']
+        if type(uf) == str:
+            uf = (uf).upper()
         return uf

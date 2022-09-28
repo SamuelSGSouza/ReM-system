@@ -41,14 +41,10 @@ Contact: contact@hencework.com
     {% block header %}{% endblock %}
 </head>
 <body>
-    <!-- Wrapper -->
-	<div class="hk-wrapper" data-layout="vertical" data-layout-style="default" data-menu="light" data-footer="simple">
-		{% include 'parcials/_barra_superior.html' %}
-		{% include 'parcials/_barra_vertical.html' %}
-		{% include 'parcials/_chat_popup.html' %}
+   
+		
         {% block conteudo %}{% endblock %}
-	</div>
-    <!-- /Wrapper -->
+	
 
    {% include 'parcials/_base_scripts.html' %}
 </body>

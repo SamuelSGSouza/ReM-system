@@ -1,10 +1,10 @@
 from django.db import models
+from model_utils.models import TimeStampedModel
 
-class Cliente(models.Model):
-    #usuario que cadastrou
-    #data
+class Cliente(TimeStampedModel):
+    vendedor = models.CharField(max_length=255, verbose_name="Última Alteração Por")    
     nome = models.CharField(max_length=255, verbose_name="Nome ou Razão Social")
-    documento = models.CharField(max_length=14, verbose_name="CPF ou CNPJ", null=True, blank=True)
+    documento = models.CharField(max_length=18, verbose_name="CPF ou CNPJ", null=True, blank=True)
     nome_rep = models.CharField(max_length=255, verbose_name="Nome Rep Legal", null=True, blank=True)
     cpf_rep = models.CharField(max_length=11, verbose_name="CPF Rep Legal", null=True, blank=True)
     contato_1 = models.CharField(max_length=255, verbose_name="Contato 1",null=True, blank=True)
@@ -24,6 +24,9 @@ class Cliente(models.Model):
     def __str__(self) -> str:
         return self.nome
 
+    class Meta:
+        ordering = ("-modified",)
+        verbose_name_plural = "Clientes"
     
 classes = (
     ('bg-primary', "Primária"),
