@@ -19,3 +19,7 @@ class Login(TemplateView):
         else:
             auth.login(self.request, user)
             return redirect('index')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
