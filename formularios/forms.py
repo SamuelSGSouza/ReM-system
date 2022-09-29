@@ -43,8 +43,9 @@ class ClienteForm(forms.ModelForm):
         return contato
     
     def clean_documento(self): 
-        documento = str(self.cleaned_data['documento'])
+        documento = self.cleaned_data['documento'] or ''
         if len(documento) != 0:
+            print(type(documento))
             if len(documento) == 18: #CNPJ
                 cnpj = CNPJ()
                 documento = str(documento)

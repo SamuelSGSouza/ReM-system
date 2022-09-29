@@ -29,14 +29,12 @@ class Cliente(TimeStampedModel):
         verbose_name_plural = "Clientes"
     
 classes = (
-    ('bg-primary', "Primária"),
-    ('bg-secondary', "Secundária"),
-    ('bg-success', "Sucesso"),
-    ('bg-info', "Informativa"),
-    ('bg-warning', "Aviso"),
-    ('bg-danger', "Perigo"),
-    ('bg-dark', "Fundo Escuro"),
-    ('bg-light', "Fundo Claro"),
+    ('bg-primary', "Fundo Azul Forte"),
+    ('bg-secondary', "Fundo Cinza"),
+    ('bg-success', "Fundo Verde"),
+    ('bg-info', "Fundo Azul Claro"),
+    ('bg-warning', "Fundo Amarelo"),
+    ('bg-danger', "Fundo Vermelho"),
 ) 
 class Tags(models.Model):
     class Meta:

@@ -68,11 +68,11 @@
                                                             <div class="erros">
                                                                 {{ form.tags.errors }}
                                                             </div>
-                                                            <label class="form-label">Tag</label>
-                                                            <select class="form-select" value="{{ dict.tags }}" name="tags" required>
+                                                            <label class="form-label">Tag</label><br>
+                                                            <select class="selectpicker" multiple aria-label="size 3 select example" value="{{ dict.tags }}" name="tags" multiple required>
                                                                 {% if tags %}
                                                                     {% for tag in tags %}
-                                                                    <option value="{{tag.id}}">{{tag.nome}}</option>
+                                                                    <option value="{{tag.id}}" >{{tag.nome}}</option>
                                                                     {% endfor %}
                                                                 {% endif %}
                                                             </select>

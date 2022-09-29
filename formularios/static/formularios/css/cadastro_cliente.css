@@ -4,3 +4,11 @@
 .erros{
     color: red!important
 }
+select{
+    border-radius: 5px!important;
+    border: 1px solid gray!important;
+    transition-duration: 0.3s;
+}
+select:hover{
+    box-shadow: 0px 0px 10px gray!important;
+}
