@@ -1,0 +1,41 @@
+td{
+    white-space: nowrap!important;
+}
+th{
+    color: white!important
+}
+.tag{
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-radius: 5px
+}
+.bg-secondary{
+    border: 1px solid gray!important;
+    color: gray !important;
+    background-color: transparent!important
+}
+.bg-primary{
+    border: 1px solid rgb(0, 60, 255)!important;
+    color: rgb(0, 60, 255) !important;
+    background-color: transparent!important
+}
+.bg-danger{
+    border: 1px solid red!important;
+    color: red !important;
+    background-color: transparent!important
+}
+.bg-info{
+    border: 1px solid rgb(0, 195, 255)!important;
+    color: rgb(0, 195, 255) !important;
+    background-color: transparent!important
+}
+.bg-success{
+    border: 1px solid rgb(1, 184, 1)!important;
+    color: rgb(1, 184, 1) !important;
+    background-color: transparent!important
+}
+.bg-warning{
+    border: 1px solid rgb(179, 179, 0)!important;
+    color: rgb(179, 179, 0)!important;
+    background-color: transparent!important
+}

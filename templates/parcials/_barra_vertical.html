@@ -147,6 +147,31 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_invoice">
+                            <span class="nav-icon-wrap">
+                                <span class="svg-icon">
+                                    <svg xmlns="https://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-digit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                        <rect x="9" y="12" width="3" height="5" rx="1" />
+                                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                        <path d="M15 12v5" />
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="nav-link-text">Extrações</span>
+                        </a>
+                        <ul id="dash_invoice" class="nav flex-column collapse  nav-children">
+                            <li class="nav-item">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'extracao' %}"><span class="nav-link-text">Extração Padrão</span></a>
+                                    </li>
+                                </ul>	
+                            </li>	
+                        </ul>	
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_scrumboard">
                             <span class="nav-icon-wrap position-relative">
                                 <span class="badge badge-sm badge-primary badge-sm badge-pill position-top-end-overflow"></span>
@@ -307,40 +332,7 @@
                             </li>	
                         </ul>	
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_invoice">
-                            <span class="nav-icon-wrap">
-                                <span class="svg-icon">
-                                    <svg xmlns="https://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-digit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                        <rect x="9" y="12" width="3" height="5" rx="1" />
-                                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                                        <path d="M15 12v5" />
-                                    </svg>
-                                </span>
-                            </span>
-                            <span class="nav-link-text">Invoices</span>
-                        </a>
-                        <ul id="dash_invoice" class="nav flex-column collapse  nav-children">
-                            <li class="nav-item">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="invoice-list.html"><span class="nav-link-text">Invoice List</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="invoice-templates.html"><span class="nav-link-text">Invoice Templates</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="create-invoice.html"><span class="nav-link-text">Create Invoice</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="invoice-preview.html"><span class="nav-link-text">Invoice Preview</span></a>
-                                    </li>
-                                </ul>	
-                            </li>	
-                        </ul>	
-                    </li>
+                    
                     
                     <!-- Itens da Barra lateral
                     <li class="nav-item">

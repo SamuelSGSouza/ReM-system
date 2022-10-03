@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('core.urls')),
     path('Formulários/', include('formularios.urls')),
+    path('Extrações/', include('extracoes.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

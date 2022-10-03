@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Extrações{% endblock %}
+
+{% block header %}
+<link href="{% static 'extracoes/css/extracoes.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block conteudo %}
+<!-- Wrapper -->
+<div class="hk-wrapper" data-layout="vertical" data-layout-style="collapsed" data-menu="light" data-footer="simple" data-hover="active">
+    {% include 'parcials/_barra_superior.html' %}
+    {% include 'parcials/_barra_vertical.html' %}
+    {% include 'parcials/_chat_popup.html' %}
+
+    <!-- Main Content -->
+    <div class="hk-pg-wrapper pb-0">
+        <div class="hk-pg-body py-0">
+            <div class="blogapp-wrap blogapp-sidebar-toggle">
+                
+                <div class="blogapp-content">
+                    <div class="blogapp-detail-wrap">
+                        <header class="blog-header">
+                            <div class="d-flex align-items-center">
+                                <a class="blogapp-title link-dark" href="#">
+                                    <h1>Dados</h1>
+                                </a>
+                            </div>
+                            <div class="blog-options-wrap">	
+                                
+                            </div>
+                        </header>
+                        <div class="blog-body">
+                            <div data-simplebar class="nicescroll-bar">
+                                <div class="post-list">
+                                    
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="all_post">
+                                            <div class="table-responsive-xxl">
+                                                <table class="table table-hover" id="dataTable" width="99%" cellspacing="0">
+                                                    <thead class="table-dark ">
+                                                        <tr >
+                                                            <th>Nome</th>
+                                                            <th>Documento</th>
+                                                            <th>Nome do Representante</th>
+                                                            <th>CPF do Representante</th>
+                                                            <th>Tags</th>
+                                                            <th>Contato 1</th>
+                                                            <th>Contato 2</th>
+                                                            <th>Contato 3</th>
+                                                            <th>Cep</th>
+                                                            <th>Logradouro</th>
+                                                            <th>Número</th>
+                                                            <th>Complemento</th>
+                                                            <th>Bairro</th>
+                                                            <th>Município</th>
+                                                            <th>Estado</th>
+                                                            <th>Ponto de Referência</th>
+                                                            <th>Email</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot class="table-dark">
+                                                        <tr>
+                                                            <th>Nome</th>
+                                                            <th>Documento</th>
+                                                            <th>Nome do Representante</th>
+                                                            <th>CPF do Representante</th>
+                                                            <th>Tags</th>
+                                                            <th>Contato 1</th>
+                                                            <th>Contato 2</th>
+                                                            <th>Contato 3</th>
+                                                            <th>Cep</th>
+                                                            <th>Logradouro</th>
+                                                            <th>Número</th>
+                                                            <th>Complemento</th>
+                                                            <th>Bairro</th>
+                                                            <th>Município</th>
+                                                            <th>Estado</th>
+                                                            <th>Ponto de Referência</th>
+                                                            <th>Email</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
+                                                        {% for dado in qs %}
+                                                            <tr>
+                                                                <td>{{dado.nome}}</td>
+                                                                <td>{{dado.documento}}</td>
+                                                                <td>{{dado.nome_rep}}</td>
+                                                                <td>{{dado.cpf_rep}}</td>
+                                                                <td>
+                                                                    {% for tag in dado.tags.all %}
+                                                                        <span class="tag {{tag.classe}}">{{tag.nome}}</span>
+                                                                    {% endfor %}
+                                                                </td>
+                                                                <td>{{dado.contato_1}}</td>
+                                                                <td>{{dado.contato_2}}</td>
+                                                                <td>{{dado.contato_3}}</td>
+                                                                <td>{{dado.cep}}</td>
+                                                                <td>{{dado.logradouro}}</td>
+                                                                <td>{{dado.numero}}</td>
+                                                                <td>{{dado.complemento}}</td>
+                                                                <td>{{dado.bairro}}</td>
+                                                                <td>{{dado.municipio}}</td>
+                                                                <td>{{dado.uf}}</td>
+                                                                <td>{{dado.ponto_referencia}}</td>
+                                                                <td>{{dado.email}}</td>
+                                                                
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                                {% include 'parcials/_pagination.html' %}
+                                            </div> <!-- /Responsive table -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Add Category -->
+                    <div id="add_new_cat" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h6 class="text-uppercase fw-bold mb-3">Add Category</h6>
+                                    <form>
+                                        <div class="row gx-3">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" placeholder="Category Name"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary float-end" data-bs-dismiss="modal">Add</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Add Category -->
+                    
+                    <!-- Add Tag -->
+                    <div id="add_new_tag" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h6 class="text-uppercase fw-bold mb-3">Add Tag</h6>
+                                    <form>
+                                        <div class="row gx-3">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <select id="input_tags" class="form-control" multiple="multiple">
+                                                        <option selected="selected">Collaborator</option>
+                                                        <option selected="selected">Designer</option>
+                                                        <option selected="selected">React Developer</option>
+                                                        <option selected="selected">Promotion</option>
+                                                        <option selected="selected">Advertisement</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary float-end" data-bs-dismiss="modal">Add</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add Tag -->
+                </div>
+            </div>
+        </div>
+        <!-- /Page Body -->
+    </div>
+    <!-- /Main Content -->
+</div>
+<!-- /Wrapper -->
+{% endblock %}
