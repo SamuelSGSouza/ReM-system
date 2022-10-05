@@ -8,10 +8,10 @@ class ThreadGerarCsv(threading.Thread):
         self.request = request
         self.function = function
         self.queryset = queryset
-        self.path = os.path.join(settings.MEDIA_URL, f'extracoes/extracao_{self.request.user.username}.csv')
+        self.path = f'extracoes/extracao_{self.request.user.username}.csv'
         threading.Thread.__init__(self)
 
     
     def run(self):
-        path = os.path.join(settings.MEDIA_URL, f'extracoes/extracao_{self.request.user.username}.csv')
+        path = f'extracoes/extracao_{self.request.user.username}.csv'
         self.function(self.queryset, path)
