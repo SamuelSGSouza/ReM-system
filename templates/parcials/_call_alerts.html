@@ -1,0 +1,16 @@
+{% load static %}
+{% if request.session.cadastrando %}
+    <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
+    <script>
+        console.log('cheguei no call_alerts')
+        $("#conteudo-interno").load("{% url 'spinner' %}");
+        console.log('Fiz o conteudo ler spinner')
+        function timeout() {
+        setTimeout(function () {
+            $("#messages").load("{% url 'messages' %}");
+            timeout();
+        }, 10000);
+        } 
+        timeout()
+    </script>
+{% endif %}

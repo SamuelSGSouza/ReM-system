@@ -5,6 +5,7 @@
 
 {% block header %}
 <link href="{% static 'extracoes/css/extracoes.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'vendors/daterangepicker/daterangepicker.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block conteudo %}
@@ -13,13 +14,14 @@
     {% include 'parcials/_barra_superior.html' %}
     {% include 'parcials/_barra_vertical.html' %}
     {% include 'parcials/_chat_popup.html' %}
-
+    
     <!-- Main Content -->
-    <div class="hk-pg-wrapper pb-0">
+    <div class="hk-pg-wrapper pb-0" >
         <div class="hk-pg-body py-0">
             <div class="blogapp-wrap blogapp-sidebar-toggle">
                 
-                <div class="blogapp-content">
+                <div id="messages">{% include 'parcials/_messages.html' %}</div>
+                <div class="blogapp-content" id="conteudo-interno">
                     <div class="blogapp-detail-wrap">
                         <header class="blog-header">
                             <div class="d-flex align-items-center">
@@ -34,8 +36,107 @@
                         <div class="blog-body">
                             <div data-simplebar class="nicescroll-bar">
                                 <div class="post-list">
-                                    
-                                    <div class="tab-content">
+                                     <!-- Form dos filtros-->
+                                     <h2>Filtros:</h2>
+                                    <form class="edit-post-form" method="get" action="">
+                                        <input type="hidden" value="{{request.user.username}}" name="vendedor">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="d-flex">
+                                                    <div class="flex-fill">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Nome do Cliente</label>
+                                                            <input class="form-control" name="nome_cliente">
+                                                        </div>
+                                                    </div><!--/flex-fill-->
+                                                    <div class="flex-fill mx-1"></div>
+                                                    <div class="flex-fill">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Nome do Vendedor</label>
+                                                            <input class="form-control" name="nome_vendedor">
+                                                        </div>
+                                                    </div><!--/flex-fill-->
+                                                </div><!--/d-flex-->
+                                            </div><!-- /container-4-->
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label class="form-label">Documento</label>
+                                                    <input class="form-control" name="documento">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label class="form-label">Cep</label>
+                                                    <input class="form-control" name="cep">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-2">
+                                                <div class="d-grid mt-5">
+                                                    <button type="button" class="btn btn-outline-secondary" id="datebutton">Selecionar data Criação</button>
+                                                </div>
+                                                <div class="d-flex-wrap hidden" id="datearea">
+                                                    <div class="d-flex" >
+
+                                                        <div class="flex-fill">
+                                                            <div class="form-group">
+                                                                <label class="form-label">De</label>
+                                                                <input class="form-control cal-event-date-start" name="single-date-pick" type="text"/>
+                                                            </div>
+                                                        </div><!-- /flex-fill -->
+                                                        <div class="flex-fill mx-1"></div>
+                                                        <div class="flex-fill">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Até</label>
+                                                                <input class="form-control cal-event-date-end" name="single-date-pick" type="text"/>
+                                                            </div>
+                                                        </div><!-- /flex-fill -->
+
+                                                    </div><!-- /d-flex-->
+                                                </div><!-- /d-flex-wrap -->
+                                            </div><!--/col-md-2-->
+                                        </div><!-- /row -->
+
+                                        <!-- Second Row-->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <fieldset>
+                                                        <h6>Tags:</h6>
+                                                    
+                                                        {% for tag in tags %}
+                                                            <span style="margin-right:20px!important">
+                                                                <input type="checkbox" id="{{tag.nome}}"  name="tags" value="{{tag.id}}">
+                                                                <label for="{{tag.nome}}">{{tag.nome|title}}</label>
+                                                            </span>
+                                                            {% if tag.id == 8 or tag.id == 16 or tag.id == 24 %}
+                                                                <br>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                            
+                                        </div><!-- /second row-->
+
+                                        <!-- Thrid Row-->
+                                        <div class="row">
+                                            <div class="col-md-7"></div>
+                                            <div class="col-md-1">
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+                                                </div>
+                                            </div>
+                                        </div><!-- /third row-->
+                                    </form> 
+
+                                    <form action=""method="post" target="_blank">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="nada" value="teste">
+                                        <button type="submit" class="btn btn-outline-success">Gerar CSV</button>
+                                    </form>
+                                    <div class="tab-content" >
                                         <div class="tab-pane fade show active" id="all_post">
                                             <div class="table-responsive-xxl">
                                                 <table class="table table-hover" id="dataTable" width="99%" cellspacing="0">
@@ -182,4 +283,12 @@
     <!-- /Main Content -->
 </div>
 <!-- /Wrapper -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $( "#datebutton" ).click(function() {
+        console.log('toggling')
+        $( "#datearea" ).toggleClass( "hidden" );
+    });
+</script>
+{% include 'parcials/_call_alerts.html' %}
 {% endblock %}

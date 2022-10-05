@@ -1,0 +1,24 @@
+
+{% if cadastrando %}
+  <script>
+    window.location.href='{% url "extracao" %}';
+  </script>
+{% endif %}
+{% if cadastro_finalizado %}
+<script>
+  window.location.href='{% url "baixar_csv" %}';
+  setTimeout(function(){
+    window.close();
+  }, 2000);
+</script>
+{% endif %}
+
+{% if cadastrando %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {{message.tags}} text-center montserrat" role="alert" style="font-weight: 800; font-size: 20px">
+        {{message}}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endif %}

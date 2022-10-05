@@ -5,7 +5,13 @@ from django.contrib import messages, auth
 
 class Index(LoginRequiredMixin, TemplateView):
     template_name = "core/index.html"
-
+    def get(self, *args, **kwargs):
+        try:
+            del self.request.session['cadastrando']
+        except:
+            pass
+        return render(self.request, self.template_name)
+        
 class Login(TemplateView):
     template_name = "core/login.html"
     def post(self, *args, **kwargs):
