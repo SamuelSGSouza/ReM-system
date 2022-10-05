@@ -12,6 +12,7 @@ from . import functions
 from datetime import datetime
 import os
 
+from django.conf import settings #TODO: remover esta linha
 class Extracao(LoginRequiredMixin, ListView):
     model = form_models.Cliente
     context_object_name = 'qs'
@@ -43,6 +44,7 @@ class Extracao(LoginRequiredMixin, ListView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['tags'] = form_models.Tags.objects.all()
+        context['teste'] = settings.MEDIA_ROOT #TODO: remover esta linha
         return context
 
     def post(self, *args, **kwargs):
