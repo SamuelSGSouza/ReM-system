@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'core',
     'formularios',
     'extracoes',
+    'kanban',
 ]
 
 MIDDLEWARE = [

@@ -22,9 +22,9 @@ class CadastrodeCliente(LoginRequiredMixin, TemplateView):
         context = {
             'tags': models.Tags.objects.all(),
         }
-        print(req)
         if form.is_valid():
-            form.save()
+            teste = form.save()
+            print(teste.id)
             messages.success(self.request, f"Cadastro de {req.get('tipo_cadastro')} realizado com sucesso")
         else:  
             messages.error(self.request, f"Cadastro de {req.get('tipo_cadastro')} teve um erro")

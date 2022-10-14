@@ -1,0 +1,13 @@
+.message-left{
+    position: absolute!important;
+    top:0px!important;
+    right:10px;
+    animation-name: right-slide; 
+    animation-delay: 10s;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes right-slide {from {right: 10px;} to {right: -500px;}}
+@-moz-keyframes right-slide {from {right: 10px;} to {right: -500px;}}
+@keyframes right-slide {from {right: 10px;} to {right: -500px;}}

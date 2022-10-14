@@ -20,6 +20,8 @@ class Cliente(TimeStampedModel):
     ponto_referencia = models.CharField(max_length=255, verbose_name="Ponto De Referência",null=True, blank=True)
     email = models.EmailField(verbose_name="Email",null=True, blank=True)
     tags = models.ManyToManyField("Tags", related_name="clientes")
+    kanban = models.CharField(max_length=255, verbose_name="Kanban", default="Iniciado")
+    comentario = models.TextField(verbose_name="Comentário", null=True, blank=True)
 
     def __str__(self) -> str:
         return self.nome

@@ -1,0 +1,505 @@
+ 
+{% load static %}
+
+<!-- Botão para formulários de edição de Kanban -->
+<div class="taskboardapp-content ps-0">
+    <div class="taskboardapp-detail-wrap">
+        <header class="taskboard-header">
+            <div class="d-flex align-items-center flex-1">
+                <a class="taskboardapp-title link-dark" href="#">
+                    <h1>
+                        Kabans
+                    </h1>
+                </a>
+                <button type="button" class="btn btn-primary ms-3 d-xxl-inline-block d-none flex-shrink-0" data-bs-toggle="modal" data-bs-target="#add_kanban">Adicionar Kanban</button>
+                
+            </div>
+            <div class="d-md-flex flex-shrink-0 mx-3 d-none">
+                <div class="d-flex align-items-center"><span class="d-md-inline d-none">Quantidade de Clientes:</span><span class="text-dark fs-5 fw-medium ps-2">{{qtd_clientes}}</span></div>
+                <div class="v-separator"></div>
+                <div class="d-flex align-items-center"><span class="d-md-inline d-none">Quantidade Kanbans:</span><span class="text-dark fs-5 fw-medium ps-2">{{qtd_kanbans}}</span></div>
+                <div class="v-separator"></div>
+            </div>
+            <div class="taskboard-options-wrap flex-1 justify-content-end">
+                <div class="taskboard-options-wrap flex-1 justify-content-end message-left">
+                    {% include 'parcials/_messages.html' %}
+                </div>
+            </div>
+        </header>
+        <div class="taskboard-body taskboard-body-alt">
+            <div>
+                <div data-simplebar class="tasklist-scroll position-relative" style="margin-bottom: 1px!important">
+                    <div id="tasklist_wrap" class="tasklist-wrap">
+
+
+                        <!-- Clientes Iniciados -->
+                        {% if qs_inicial %}
+                        <div class="card card-simple card-flush spipeline-list ">
+                            <div class="card-header card-header-action pb-4">
+                                <div class="spipeline-handle pb-5 pt-2">
+                                    <h6 class="text-uppercase fw-bold mb-4">Clientes Iniciados</h6>
+                                    
+                                </div>
+                                <div>
+                                    <span>
+                                        <span class="spipeline-dot-sep">●</span>
+                                        <span class="lead-count">
+                                            {{qs_inicial.count}} Clientes
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div id="i1" class="tasklist-cards-wrap">
+                                    {% for cliente in qs_inicial %}
+                                    <div class="card card-border spipeline-card">
+                                        <div class="card-body">
+                                            <div class="card-action-wrap">
+                                                <a class="btn btn-xs btn-icon btn-rounded btn-light dropdown-toggle no-caret" aria-expanded="false" data-bs-toggle="dropdown" href="#" id="{{cliente.id}}" onclick="ClienteId(this.id)"><span class="icon"><span class="feather-icon"><i data-feather="chevron-right"></i></span></span></a>
+                                                <div role="menu" class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#transferir_cliente"  >Transferir Cliente</a>
+                                                    <a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#editar_cliente" data-nome="{{cliente.nome}}" data-contato_1 = "{{cliente.contato_1}}" data-contato_2 = "{{cliente.contato_2}}" data-contato_3 = "{{cliente.contato_3}}" data-comentario = "{{cliente.comentario}}" onclick="Preenche_Form(this.dataset)">Editar Cliente</a>
+                                                    <a class="dropdown-item edit-tasklist" href="#" id="{{cliente.nome}}" onclick="Nome_Finalizado(this.id)" data-bs-toggle="modal" data-bs-target="#finaliza_cliente_modal" >Finalizar Cliente</a>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="media">
+                                                
+                                                <div class="media-body">
+                                                    <div class="brand-name">{{cliente.nome}}</div>
+                                                    <div class="price-estimation">{{cliente.documento}}</div>
+                                                    <div class="brand-cat">
+                                                        {% for tag in cliente.tags.all %}
+                                                            <span class="tag {{tag.classe}}">{{tag.nome}}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="media align-items-center">
+                                                        <div class="media-head">
+                                                            
+                                                        </div>
+                                                        <div class="media-body">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <!-- /Clientes Iniciados -->
+
+                        <!-- Kanbans -->
+                        {% for kanban, clientes in kanban_clientes.items %}
+                            {% if clientes.count != 0 %}
+                            <div class="card card-simple card-flush spipeline-list ">
+                                <div class="card-header card-header-action pb-4">
+                                    <div class="spipeline-handle pb-5 pt-2">
+                                        <h6 class="text-uppercase fw-bold mb-4">{{kanban}}</h6>
+                                        
+                                    </div>
+                                    <div>
+                                        <span>
+                                            <span class="spipeline-dot-sep">●</span>
+                                            <span class="lead-count">
+                                                {{clientes.count}} Clientes
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div id="i2" class="tasklist-cards-wrap">
+                                        {% for cliente in clientes %}
+                                        <div class="card card-border spipeline-card">
+                                            <div class="card-body">
+                                                <div class="card-action-wrap">
+                                                    <a class="btn btn-xs btn-icon btn-rounded btn-light dropdown-toggle no-caret" aria-expanded="false" data-bs-toggle="dropdown" href="#" id="{{cliente.id}}" onclick="ClienteId(this.id)"><span class="icon"><span class="feather-icon"><i data-feather="chevron-right"></i></span></span></a>
+                                                    <div role="menu" class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#transferir_cliente"  >Transferir Cliente</a>
+                                                        <a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#editar_cliente" data-nome="{{cliente.nome}}" data-contato_1 = "{{cliente.contato_1}}" data-contato_2 = "{{cliente.contato_2}}" data-contato_3 = "{{cliente.contato_3}}" data-comentario = "{{cliente.comentario}}" onclick="Preenche_Form(this.dataset)">Editar Cliente</a>
+                                                        <a class="dropdown-item edit-tasklist" href="#" id="{{cliente.nome}}" onclick="Nome_Finalizado(this.id)" data-bs-toggle="modal" data-bs-target="#finaliza_cliente_modal" >Finalizar Cliente</a>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="media">
+                                                    
+                                                    <div class="media-body">
+                                                        <div class="brand-name">{{cliente.nome}}</div>
+                                                        <div class="price-estimation">{{cliente.documento}}</div>
+                                                        <div class="brand-cat">
+                                                            {% for tag in cliente.tags.all %}
+                                                                <span class="tag {{tag.classe}}">{{tag.nome}}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <div class="media align-items-center">
+                                                            <div class="media-head">
+                                                                
+                                                            </div>
+                                                            <div class="media-body">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% endif %}
+                        {% endfor %}
+
+                            
+                        <div class="card card-simple card-border spipeline-list create-new-list">
+                            <div class="card-header card-header-action">
+                                <button class="btn btn-light btn-block bg-transparent border-0 text-primary"  data-bs-toggle="modal" data-bs-target="#add_kanban"><span><span class="icon"><span class="feather-icon"><i data-feather="plus"></i></span></span><span class="btn-text">Adicionar Kanban</span></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                            
+    <!-- Adicionar Kanban -->
+    <div id="add_kanban" class="modal fade add-new-task" data-url="{% url 'criar_kanban' %}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="mb-4">Adicionar Kanban</h5>
+                    <form id="kanban_form">
+                        <div class="row gx-3">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label">Nome do Kanban</label>
+                                    <input class="form-control task-name"id="nome" name="nome" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer align-items-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="kanban_button" class="btn btn-primary btn-add-task" >Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- /Adicionar Kanban -->
+    
+    <!-- Ordenar Kanbans -->
+    <div id="ordenar_kanbans" class="modal fade add-tasklist-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="mb-4">Add New List</h5>
+                    <form>
+                        <div class="row gx-3">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input class="form-control" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer align-items-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-add-tasklist" >Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Ordenar Kanbans -->
+    
+
+    <!-- Transferir Cliente -->
+    <div id="transferir_cliente" class="modal fade edit-tasklist-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="mb-4">Kanban de destino:</h5>
+                    <form>
+                        <div class="row gx-3">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <select class="form-select" name="kanban_destino" id="kanban_destino">
+                                        {% for k in kanbans  %}
+                                        <option value="{{k}}">{{k}}</option>
+                                        {% endfor %}
+                                      </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer align-items-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary btn-edit-tasklist" data-url="{% url 'transfere_kanban' %}" id="transfere_kanban">Transferir</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- /Transferir Cliente -->
+
+    <!-- Editar Cliente -->
+    <div id="editar_cliente" class="modal fade edit-tasklist-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="mb-4" id="nome_cliente_form">Editar Cliente</h5>
+                        <form>
+                        <div class="row gx-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Contato 1</label>
+                                    <input name="contato_1" id="contato_1_field" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Contato 2</label>
+                                    <input name="contato_2" id="contato_2_field" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Contato 3</label>
+                                    <input name="contato_3" id="contato_3_field" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Comentário</label><br>
+                                    <textarea id="comentario_form" name="comentario_form" rows="5" cols="50" onfocusout="Define_Comentario(this.value)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer align-items-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary btn-edit-tasklist" data-url="{% url 'edita_cliente' %}" id="edita_cliente">Editar</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- /Editar Cliente -->
+
+    <!-- Finaliza Cliente -->
+    <div id="finaliza_cliente_modal" class="modal fade edit-tasklist-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="mb-4" >Finalizar Cliente</h5>
+                        <form>
+                        <div class="row gx-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <h6>Você confirma que deseja finalizar o cliente  <b><span id="nome_finaliza_cliente"></span></b>?</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer align-items-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger btn-edit-tasklist" data-url="{% url 'finaliza_cliente' %}" id="finaliza_cliente">Finalizar</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- /Finaliza Cliente -->
+
+</div>
+<script>
+    //Botão para editar Kanban
+    window.idBotaoClicado =0;
+
+    function botaoClicado(e){
+        window.idBotaoClicado= e;
+    }
+
+    //Botão para editar Cliente
+    window.clienteID = 0;
+
+    function ClienteId(e){
+        window.clienteID= e;
+    }
+
+
+    //Preenchendo Formulário de Edição de Cliente
+    window.contato_1_var = 0;
+    window.contato_2_var = 0;
+    window.contato_3_var = 0;
+    window.comentario_var = "";
+    function Define_Comentario(e){
+        window.comentario_var= e;
+    }
+
+    function Preenche_Form(dataset){
+        var nome = dataset.nome
+        var contato_1 = dataset.contato_1;
+        var contato_2 = dataset.contato_2;
+        var contato_3 = dataset.contato_3;
+        var comentario = dataset.comentario;
+        console.log(comentario)
+        if (comentario == "None"){
+            comentario = "";
+        }
+        window.contato_1_var = contato_1;
+        window.contato_2_var = contato_2;
+        window.contato_3_var = contato_3;
+        window.comentario_var = comentario;
+        //modificando nome
+        document.getElementById("nome_cliente_form").innerHTML = nome;
+
+        //modificando contato 1
+        document.getElementById("contato_1_field").placeholder = contato_1;
+        document.getElementById("contato_1_field").value = contato_1;
+        //modificando contato 2
+        document.getElementById("contato_2_field").placeholder = contato_2;
+        document.getElementById("contato_2_field").value = contato_2;
+
+        //modificando contato 1
+        document.getElementById("contato_3_field").placeholder = contato_3;
+        document.getElementById("contato_3_field").value = contato_3;
+
+        //modificando comentario
+        document.getElementById("comentario_form").placeholder = comentario;
+        document.getElementById("comentario_form").value = comentario;
+    }
+
+    //Preenchendo finalização do cliente
+    function Nome_Finalizado(nome, id){
+        document.getElementById("nome_finaliza_cliente").innerHTML = nome;
+    }
+
+</script>
+
+<!-- Envio ajax de Formulários-->
+<script>
+    //Criação de Kanban
+    $("#kanban_button").click(function () {
+        var url = document.getElementById('add_kanban').dataset.url;
+        $.ajax({
+            url: url,
+            data: {
+                nome: $("#nome").val(),
+            },
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+                recarrega_main();
+            }
+        });
+    });
+
+    //Editando Cliente
+    $("#edita_cliente").click(function () {
+        var url = document.getElementById('edita_cliente').dataset.url;
+        var contato_1 = window.contato_1_var;
+        var contato_2 = window.contato_2_var;
+        var contato_3 = window.contato_3_var;
+        var comentario = window.comentario_var;
+        console.log(comentario)
+        $.ajax({
+            url: url,
+            data: {
+                contato_1: contato_1,
+                contato_2: contato_2,
+                contato_3: contato_3,
+                comentario: comentario,
+                id_cliente: window.clienteID
+            },
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+                recarrega_main();
+            }
+        });
+    });
+    //Fim de criação de Kanban
+
+    //Tranferência de Kanban do cliente
+    $("#transfere_kanban").click(function () {
+        var url = document.getElementById('transfere_kanban').dataset.url;
+        console.log(url)
+        var destino = document.getElementById('kanban_destino').value;
+        $.ajax({
+            url: url,
+            data: {
+                kanban_destino: destino,
+                id_cliente: window.clienteID
+            },
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+                recarrega_main();
+            }
+        });
+    });
+
+    //Finaliza Cliente
+    $("#finaliza_cliente").click(function () {
+        var url = document.getElementById('finaliza_cliente').dataset.url;
+        $.ajax({
+            url: url,
+            data: {
+                id_cliente: window.clienteID
+            },
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+                recarrega_main();
+            }
+        });
+    });
+    //TODO: Resolver problema que quando a página é recarregada os botões não funcionam mais
+</script>
+
+
+
+
+<!-- Apex JS -->
+<script src="{% static 'vendors/apexcharts/dist/apexcharts.min.js' %}"></script>
+
+<!-- Dropify JS -->
+<script src="{% static 'vendors/dropify/dist/js/dropify.min.js' %}"></script>
+<script src="{% static 'dist/js/dropify-data.js' %}"></script>
+
+<!-- Init JS -->
+<script src="{% static 'dist/js/init.js' %}"></script>
+<script src="{% static 'dist/js/pipeline-data.js' %}"></script>
+<script src="{% static 'dist/js/chips-init.js' %}"></script>

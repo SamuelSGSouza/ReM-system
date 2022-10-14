@@ -12,6 +12,9 @@ from . import functions
 from datetime import datetime
 import os
 
+class Teste(TemplateView):
+    template_name = ""
+
 class Extracao(LoginRequiredMixin, ListView):
     model = form_models.Cliente
     context_object_name = 'qs'

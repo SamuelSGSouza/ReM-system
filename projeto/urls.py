@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('core.urls')),
     path('Formulários/', include('formularios.urls')),
     path('Extrações/', include('extracoes.urls')),
+    path('Kanbans/', include('kanban.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
