@@ -18,6 +18,7 @@ class CadastrodeCliente(LoginRequiredMixin, TemplateView):
         return render(self.request, self.template_name, context)
     def post(self, *args, **kwargs):
         req = self.request.POST
+        print(req)
         form = forms.ClienteForm(req)
         context = {
             'tags': models.Tags.objects.all(),
@@ -27,6 +28,7 @@ class CadastrodeCliente(LoginRequiredMixin, TemplateView):
             print(teste.id)
             messages.success(self.request, f"Cadastro de {req.get('tipo_cadastro')} realizado com sucesso")
         else:  
+            print(form.errors.as_ul())
             messages.error(self.request, f"Cadastro de {req.get('tipo_cadastro')} teve um erro")
             dicionario = {k: v[0] if len(v) == 1 else v for k, v in req.lists()}
             context['dict'] = dicionario

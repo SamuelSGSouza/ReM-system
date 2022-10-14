@@ -44,6 +44,7 @@
                                                 {% csrf_token %}
                                                 <input type="hidden" value="{{request.user.username}}" name="vendedor">
                                                 <input type="hidden" value="Pessoa Física" name="tipo_cadastro">
+                                                <input type="hidden" value="Iniciado" name="kanban">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -208,6 +209,7 @@
                                                 {% csrf_token %}
                                                 <input type="hidden" value="{{request.user.username}}" name="vendedor">
                                                 <input type="hidden" value="Pessoa Jurídica" name="tipo_cadastro">
+                                                <input type="hidden" value="Iniciado" name="kanban">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
