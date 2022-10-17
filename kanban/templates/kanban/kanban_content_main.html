@@ -17,7 +17,7 @@
             <div class="d-md-flex flex-shrink-0 mx-3 d-none">
                 <div class="d-flex align-items-center"><span class="d-md-inline d-none">Quantidade de Clientes:</span><span class="text-dark fs-5 fw-medium ps-2">{{qtd_clientes}}</span></div>
                 <div class="v-separator"></div>
-                <div class="d-flex align-items-center"><span class="d-md-inline d-none">Quantidade Kanbans:</span><span class="text-dark fs-5 fw-medium ps-2">{{qtd_kanbans}}</span></div>
+                <div class="d-flex align-items-center"><span class="d-md-inline d-none">Quantidade Kanbans:</span><span class="text-dark fs-5 fw-medium ps-2">{{request.session.qtd_kanbans}}</span></div>
                 <div class="v-separator"></div>
             </div>
             <div class="taskboard-options-wrap flex-1 justify-content-end">
@@ -57,7 +57,7 @@
                                     <div class="card card-border spipeline-card">
                                         <div class="card-body">
                                             <div class="card-action-wrap">
-                                                <a class="btn btn-xs btn-icon btn-rounded btn-light dropdown-toggle no-caret" aria-expanded="false" data-bs-toggle="dropdown" href="#" id="{{cliente.id}}" onclick="ClienteId(this.id)"><span class="icon"><span class="feather-icon"><i data-feather="chevron-right"></i></span></span></a>
+                                                <a class="btn btn-xs btn-icon btn-rounded btn-light dropdown-toggle no-caret" aria-expanded="false" data-bs-toggle="dropdown" href="#" id="{{cliente.id}}" onclick="ClienteId(this.id)"><span class="icon"><span class="feather-icon"><i class="fa fa-solid fa-chevron-left"></i></span></span></a>
                                                 <div role="menu" class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#transferir_cliente"  >Transferir Cliente</a>
                                                     <a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#editar_cliente" data-nome="{{cliente.nome}}" data-contato_1 = "{{cliente.contato_1}}" data-contato_2 = "{{cliente.contato_2}}" data-contato_3 = "{{cliente.contato_3}}" data-comentario = "{{cliente.comentario}}" onclick="Preenche_Form(this.dataset)">Editar Cliente</a>
@@ -71,7 +71,7 @@
                                                     <div class="brand-name">{{cliente.nome}}</div>
                                                     <div class="price-estimation">{{cliente.documento}}</div>
                                                     <div class="brand-cat">
-                                                        {% for tag in cliente.tags.all %}
+                                                        {% for tag in cliente.tags %}
                                                             <span class="tag {{tag.classe}}">{{tag.nome}}</span>
                                                         {% endfor %}
                                                     </div>
@@ -97,7 +97,7 @@
 
                         <!-- Kanbans -->
                         {% for kanban, clientes in kanban_clientes.items %}
-                            {% if clientes.count != 0 %}
+                            {% if clientes %}
                             <div class="card card-simple card-flush spipeline-list ">
                                 <div class="card-header card-header-action pb-4">
                                     <div class="spipeline-handle pb-5 pt-2">
@@ -121,7 +121,7 @@
                                         <div class="card card-border spipeline-card">
                                             <div class="card-body">
                                                 <div class="card-action-wrap">
-                                                    <a class="btn btn-xs btn-icon btn-rounded btn-light dropdown-toggle no-caret" aria-expanded="false" data-bs-toggle="dropdown" href="#" id="{{cliente.id}}" onclick="ClienteId(this.id)"><span class="icon"><span class="feather-icon"><i data-feather="chevron-right"></i></span></span></a>
+                                                    <a class="btn btn-xs btn-icon btn-rounded btn-light dropdown-toggle no-caret" aria-expanded="false" data-bs-toggle="dropdown" href="#" id="{{cliente.id}}" onclick="ClienteId(this.id)"><span class="icon"><span class="feather-icon"><i class="fa fa-solid fa-chevron-left"></i></span></a>
                                                     <div role="menu" class="dropdown-menu dropdown-menu-end">
                                                         <a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#transferir_cliente"  >Transferir Cliente</a>
                                                         <a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#editar_cliente" data-nome="{{cliente.nome}}" data-contato_1 = "{{cliente.contato_1}}" data-contato_2 = "{{cliente.contato_2}}" data-contato_3 = "{{cliente.contato_3}}" data-comentario = "{{cliente.comentario}}" onclick="Preenche_Form(this.dataset)">Editar Cliente</a>
@@ -135,7 +135,7 @@
                                                         <div class="brand-name">{{cliente.nome}}</div>
                                                         <div class="price-estimation">{{cliente.documento}}</div>
                                                         <div class="brand-cat">
-                                                            {% for tag in cliente.tags.all %}
+                                                            {% for tag in cliente.tags %}
                                                                 <span class="tag {{tag.classe}}">{{tag.nome}}</span>
                                                             {% endfor %}
                                                         </div>
@@ -279,19 +279,19 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Contato 1</label>
-                                    <input name="contato_1" id="contato_1_field" class="form-control">
+                                    <input name="contato_1" id="contato_1_field" class="form-control" onfocusout="define_contato_1(this.value)">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Contato 2</label>
-                                    <input name="contato_2" id="contato_2_field" class="form-control">
+                                    <input name="contato_2" id="contato_2_field" class="form-control" onfocusout="define_contato_2(this.value)">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Contato 3</label>
-                                    <input name="contato_3" id="contato_3_field" class="form-control">
+                                    <input name="contato_3" id="contato_3_field" class="form-control" onfocusout="define_contato_3(this.value)">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -367,6 +367,15 @@
     function Define_Comentario(e){
         window.comentario_var= e;
     }
+    function define_contato_1(e){
+        window.contato_1_var= e;
+    }
+    function define_contato_2(e){
+        window.contato_2_var= e;
+    }
+    function define_contato_3(e){
+        window.contato_3_var= e;
+    }
 
     function Preenche_Form(dataset){
         var nome = dataset.nome
@@ -374,7 +383,6 @@
         var contato_2 = dataset.contato_2;
         var contato_3 = dataset.contato_3;
         var comentario = dataset.comentario;
-        console.log(comentario)
         if (comentario == "None"){
             comentario = "";
         }
@@ -413,17 +421,23 @@
     //Criação de Kanban
     $("#kanban_button").click(function () {
         var url = document.getElementById('add_kanban').dataset.url;
-        $.ajax({
-            url: url,
-            data: {
-                nome: $("#nome").val(),
-            },
-            dataType: "json",
-            type: "GET",
-            success: function (data) {
-                recarrega_main();
-            }
+        var dados = "?nome=" + $("#nome").val();
+        fetch(
+            url + dados
+        ).then(response => {
+            recarrega_main();
         });
+        // $.ajax({
+        //     url: url,
+        //     data: {
+        //         nome: $("#nome").val(),
+        //     },
+        //     dataType: "json",
+        //     type: "GET",
+        //     success: function (data) {
+        //         recarrega_main();
+        //     }
+        // });
     });
 
     //Editando Cliente
@@ -433,7 +447,6 @@
         var contato_2 = window.contato_2_var;
         var contato_3 = window.contato_3_var;
         var comentario = window.comentario_var;
-        console.log(comentario)
         $.ajax({
             url: url,
             data: {
@@ -455,7 +468,6 @@
     //Tranferência de Kanban do cliente
     $("#transfere_kanban").click(function () {
         var url = document.getElementById('transfere_kanban').dataset.url;
-        console.log(url)
         var destino = document.getElementById('kanban_destino').value;
         $.ajax({
             url: url,
@@ -490,16 +502,3 @@
 </script>
 
 
-
-
-<!-- Apex JS -->
-<script src="{% static 'vendors/apexcharts/dist/apexcharts.min.js' %}"></script>
-
-<!-- Dropify JS -->
-<script src="{% static 'vendors/dropify/dist/js/dropify.min.js' %}"></script>
-<script src="{% static 'dist/js/dropify-data.js' %}"></script>
-
-<!-- Init JS -->
-<script src="{% static 'dist/js/init.js' %}"></script>
-<script src="{% static 'dist/js/pipeline-data.js' %}"></script>
-<script src="{% static 'dist/js/chips-init.js' %}"></script>
