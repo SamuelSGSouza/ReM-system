@@ -4,6 +4,13 @@
 {% block title %}Cadastro de Cliente{% endblock %}
 {% block header %}
 <link href="{% static 'formularios/css/cadastro_cliente.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/themes/light.css' %}" rel='stylesheet' type='text/css'>
+<style>
+    .content select {   
+        width: 100%;
+        max-width: 300px;
+    }
+</style>
 {% endblock %}
 {% block conteudo %}
 
@@ -61,7 +68,7 @@
                                                                 {{ form.contato_1.errors }}
                                                             </div>
                                                             <label class="form-label">Contato 1</label>
-                                                            <input name="contato_1" value="{{ dict.contato_1 }}" data-mask="(00) 000-000-000" class="form-control"  placeholder="(00) 000-000-000" required>
+                                                            <input name="contato_1" value="{{ dict.contato_1 }}" data-mask="(00) 000000-000" class="form-control"  placeholder="(00) 000000-000" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
@@ -69,8 +76,8 @@
                                                             <div class="erros">
                                                                 {{ form.tags.errors }}
                                                             </div>
-                                                            <label class="form-label">Tag</label><br>
-                                                            <select class="selectpicker" multiple aria-label="size 3 select example" value="{{ dict.tags }}" name="tags" multiple required>
+                                                            <label class="form-label">Tags</label><br>
+                                                            <select class="form-control" multiple  value="{{ dict.tags }}" name="tags" data-placeholder="Selecione as Tags" required>
                                                                 {% if tags %}
                                                                     {% for tag in tags %}
                                                                     <option value="{{tag.id}}" >{{tag.nome}}</option>
@@ -99,7 +106,7 @@
                                                                 {{ form.contato_2.errors }}
                                                             </div>
                                                             <label class="form-label">Contato 2</label>
-                                                            <input class="form-control" value="{{ dict.contato_2 }}" data-mask="(00) 000-000-000" name="contato_2"  placeholder="(00) 000-000-000">
+                                                            <input class="form-control" value="{{ dict.contato_2 }}" data-mask="(00) 000000-000" name="contato_2"  placeholder="(00) 000000-000">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -108,7 +115,7 @@
                                                                 {{ form.contato_3.errors }}
                                                             </div>
                                                             <label class="form-label">Contato 3</label>
-                                                            <input class="form-control" data-mask="(00) 000-000-000" value="{{ dict.contato_3 }}" name="contato_3"  placeholder="(00) 000-000-000">
+                                                            <input class="form-control" data-mask="(00) 000000-000" value="{{ dict.contato_3 }}" name="contato_3"  placeholder="(00) 000000-000">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -226,7 +233,7 @@
                                                                 {{ form.contato_1.errors }}
                                                             </div>
                                                             <label class="form-label">Contato 1</label>
-                                                            <input name="contato_1" value="{{ dict.contato_1 }}" data-mask="(00) 000-000-000" class="form-control"  placeholder="(00) 000-000-000" required>
+                                                            <input name="contato_1" value="{{ dict.contato_1 }}" data-mask="(00) 000000-000" class="form-control"  placeholder="(00) 000000-000" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
@@ -234,11 +241,11 @@
                                                             <div class="erros">
                                                                 {{ form.tags.errors }}
                                                             </div>
-                                                            <label class="form-label">Tag</label>
-                                                            <select class="form-select" value="{{ dict.tags }}" name="tags" required>
+                                                            <label class="form-label">Tags</label><br>
+                                                            <select class="form-control" multiple  value="{{ dict.tags }}" name="tags" data-placeholder="Selecione as Tags" required>
                                                                 {% if tags %}
                                                                     {% for tag in tags %}
-                                                                    <option value="{{tag.id}}">{{tag.nome}}</option>
+                                                                    <option value="{{tag.id}}" >{{tag.nome}}</option>
                                                                     {% endfor %}
                                                                 {% endif %}
                                                             </select>
@@ -281,7 +288,7 @@
                                                                 {{ form.contato_2.errors }}
                                                             </div>
                                                             <label class="form-label">Contato 2</label>
-                                                            <input class="form-control" value="{{ dict.contato_2 }}" data-mask="(00) 000-000-000" name="contato_2"  placeholder="(00) 000-000-000">
+                                                            <input class="form-control" value="{{ dict.contato_2 }}" data-mask="(00) 000000-000" name="contato_2"  placeholder="(00) 000000-000">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
@@ -290,7 +297,7 @@
                                                                 {{ form.contato_3.errors }}
                                                             </div>
                                                             <label class="form-label">Contato 3</label>
-                                                            <input class="form-control" value="{{ dict.contato_3 }}" data-mask="(00) 000-000-000" name="contato_3"  placeholder="(00) 000-000-000">
+                                                            <input class="form-control" value="{{ dict.contato_3 }}" data-mask="(00) 000000-000" name="contato_3"  placeholder="(00) 000000-000">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -392,7 +399,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Add Category -->
+                    <!-- Add Category 
                     <div id="add_new_cat" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                             <div class="modal-content">
@@ -415,9 +422,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /Add Category -->
+                     /Add Category -->
                     
-                    <!-- Add Tag -->
+                    <!-- Add Tag 
                     <div id="add_new_tag" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                             <div class="modal-content">
@@ -446,7 +453,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Add Tag -->
+                     Add Tag -->
                 </div>
             </div>
         </div>
@@ -480,6 +487,7 @@
         $("#btnpj").toggleClass('btn-secondary');
     });
     });
+    
 </script>
 
 <script type="text/javascript">
@@ -523,4 +531,20 @@
 			});
 </script>
 {% include 'parcials/_base_scripts.html' %}
+<script src="{% static 'js/lc_select.js' %}"></script>
+    
+<script>
+    const select = document.querySelector('select[name=simple]');
+    new lc_select(select, {
+        wrap_width: '100%',
+        min_for_search: 3,
+        pre_placeh_opt: true,
+    });
+
+    new lc_select('select[name="tags"]', {
+        wrap_width : '100%',
+        enable_search : false,
+        max_opts : 20,
+    });
+</script>
 {% endblock %}

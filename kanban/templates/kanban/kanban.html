@@ -17,6 +17,13 @@
 <link href="{% static 'vendors/dropzone/dist/dropzone.min.css' %}" rel="stylesheet" type="text/css"/>
 
 <link href="{% static 'kanban/css/kanban.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'css/themes/light.css' %}" rel='stylesheet' type='text/css'>
+<style>
+    .content select {   
+        width: 100%;
+        max-width: 300px;
+    }
+</style>
 <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock %}
 

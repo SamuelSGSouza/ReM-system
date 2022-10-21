@@ -24,7 +24,7 @@ class ClienteForm(forms.ModelForm):
     
     def clean_contato_1(self): 
         contato = self.cleaned_data['contato_1'] 
-        if len(contato) < 16:
+        if len(contato) < 15:
             raise ValidationError('Este campo precisa ser preenchido corretamente')
         else:
             contato = re.sub('[^0-9]', '', contato)

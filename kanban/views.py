@@ -21,7 +21,6 @@ class Kanban(TemplateView):
         #context para clientes
         qs_clientes = form_models.Cliente.objects.filter(vendedor=self.request.user.username).exclude(kanban="Finalizado").order_by("id")
         clientes = list(qs_clientes.values_list("id", "nome", "documento", "contato_1","contato_2","contato_3", "comentario", "kanban"))
-        print(clientes)
         #transformando clientes numa lista de dicts
         cli = []
         for cliente in clientes:
@@ -37,11 +36,10 @@ class Kanban(TemplateView):
             cl["tags"] = list(form_models.Cliente.objects.get(id=cliente[0]).tags.all().values())
             cli.append(cl)
         
-        print(len(cli))
         #passando os resultados para a session
         self.request.session['qs_clientes'] = cli
         self.request.session["qtd_clientes"] = int(qs_clientes.count())
-
+        self.request.session["tags"] = list(form_models.Tags.objects.filter().values())
         return super().get_context_data(**kwargs)
 
 
@@ -126,10 +124,59 @@ def cria_kaban(request):
 
     return JsonResponse({'foo':'bar'})
 
+def excluir_kanban(request):
+    #pega nome do kanban
+    nome_kanban = request.GET.get('nome_kanban')
+    #deletar todos os kanbans com esse nome
+    models.kanbans.objects.filter(vendedor=request.user.username, kanban=nome_kanban).delete()
+    #finalizar todos os clientes com esse kanban
+    form_models.Cliente.objects.filter(vendedor=request.user.username, kanban=nome_kanban).update(kanban="Finalizado")
+    #finalizar todos os clientes com esse kanban na sessao
+    clientes = request.session['qs_clientes']
+    for cliente in clientes:
+        if cliente['kanban'] == nome_kanban:
+            cliente['kanban'] = "Finalizado"
+    request.session['qs_clientes'] = clientes
+    #atualizar a sessao
+    request.session["qtd_kanbans"] = int(request.session["qtd_kanbans"] - 1)
+    lista = request.session['kanbans']
+    lista.remove(nome_kanban)
+    request.session['kanbans'] = lista
+    #atualizar quantidade de clientes
+    request.session["qtd_clientes"] = int(request.session["qtd_clientes"] - 1)
+    #enviando mensagem
+    messages.success(request, f"Kanban Excluido Com Sucesso!")
+    return JsonResponse({'foo':'bar'})
+
+def editar_tags(request):
+    #pega nome do kanban
+    id_cliente = int(request.GET.get('id_cliente'))
+    tags = request.GET.get('tags')
+    #deletar todos os kanbans com esse nome
+    cliente = form_models.Cliente.objects.get(id=id_cliente)
+    cliente.tags.clear()
+    for tag in tags.split(","):
+        cliente.tags.add(form_models.Tags.objects.get(id=tag))
+    cliente.save()
+
+    #atualizando cliente na sessao
+    clientes = request.session['qs_clientes']
+    for cliente in clientes:
+        if int(cliente['id']) == id_cliente:
+            print(cliente['tags'])
+            cliente['tags'] = list(form_models.Cliente.objects.get(id=int(cliente['id'])).tags.all().values())
+            break
+    request.session['qs_clientes'] = clientes
+
+    #enviando mensagem
+    messages.success(request, f"Tags Atualizadas Com Sucesso!")
+    return JsonResponse({'foo':'bar'})
+
 def edita_cliente(request):
     req = request.GET
     contato_1 = req.get('contato_1')
     contato_2 = req.get('contato_2')
+    print(contato_2)
     contato_3 = req.get('contato_3')
     comentario = req.get('comentario')
     id = int(req.get('id_cliente'))
